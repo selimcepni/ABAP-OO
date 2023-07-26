@@ -1,0 +1,762 @@
+*&---------------------------------------------------------------------*
+*& Report Z_OOPROGRAMMING
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT z_ooprogramming.
+**
+*
+*CLASS lcl_main DEFINITION DEFERRED.
+*
+* class can be declared from the front if it is to be defined later // claas daha sonra tanımlanacak önden tanıtılabilir
+*
+**
+
+*PARAMETERS: p_num1 TYPE int4,
+*            p_num2 TYPE int4.
+*
+*CLASS lcl_main DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      sum_numbers,
+*      sub_numbers.
+*
+*    DATA: mv_sum TYPE int4,
+*          mv_sub TYPE int4.
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_main IMPLEMENTATION.
+*  METHOD sum_numbers.
+*    mv_sum = p_num1 + p_num2.
+*  ENDMETHOD.
+*  METHOD sub_numbers.
+*    mv_sub = p_num1 - p_num2.
+*  ENDMETHOD.
+*ENDCLASS.
+*
+*DATA: go_main TYPE REF TO lcl_main.
+*
+*START-OF-SELECTION.
+*
+*  CREATE OBJECT go_main.
+*
+*  go_main->sum_numbers( ).
+*  WRITE: /'Toplam = ', go_main->mv_sum.
+*
+*  go_main->sub_numbers( ).
+*  WRITE: /'Farkı = ', go_main->mv_sub.
+*
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* PARAMETERS
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+
+
+
+
+*CLASS lcl_main DEFINITION DEFERRED.
+*DATA: go_main TYPE REF TO lcl_main.
+*DATA: gv_sum          TYPE int4,
+*      gv_changing_num TYPE int4.
+*
+*
+*
+*
+*PARAMETERS: p_num1 TYPE int4,
+*            p_num2 TYPE int4.
+*
+*
+*CLASS lcl_main DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      sum_numbers                                ,
+*      sub_numbers,
+*      sum_numbers_v2 IMPORTING iv_num1 TYPE int4
+*                               iv_num2 TYPE int4
+*
+*                     EXPORTING ev_sum  TYPE int4,
+*
+*      sub_numbers_v3 IMPORTING iv_num1 TYPE int4
+*                     CHANGING  cv_num1 TYPE int4,
+*
+*      sum_numbers_v3 IMPORTING iv_num1       TYPE int4
+*                               iv_num2       TYPE int4
+*                     RETURNING VALUE(rv_sum) TYPE int4.
+*
+*    DATA: mv_sum TYPE int4,
+*          mv_sub TYPE int4.
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_main IMPLEMENTATION.
+*  METHOD sum_numbers.
+*    mv_sum = p_num1 + p_num2.
+*  ENDMETHOD.
+*
+*  METHOD sub_numbers.
+*    mv_sub = p_num1 - p_num2.
+*  ENDMETHOD.
+*
+*  METHOD sum_numbers_v2.
+*    ev_sum = iv_num1 + iv_num2.
+*  ENDMETHOD.
+*
+*  METHOD sub_numbers_v3.
+*    cv_num1 = iv_num1 - cv_num1.
+*  ENDMETHOD.
+*
+*  METHOD sum_numbers_v3.
+*    rv_sum = iv_num1 + iv_num2.
+*  ENDMETHOD.
+*
+*
+*
+*
+*ENDCLASS.
+*
+*
+*
+*
+*
+*START-OF-SELECTION.
+*
+*  CREATE OBJECT go_main.
+*
+*  go_main->sum_numbers( ).
+*  WRITE: /'Toplam = ', go_main->mv_sum.
+*
+*  go_main->sub_numbers( ).
+*  WRITE: /'Farkı = ', go_main->mv_sub.
+*
+*
+*  go_main->sum_numbers_v2(
+*    EXPORTING
+*      iv_num1 = p_num1
+*      iv_num2 = p_num2
+*    IMPORTING
+*      ev_sum  = gv_sum
+*  ).
+*
+*  WRITE: /'Toplam V2 = ', gv_sum.
+*
+*  gv_changing_num = p_num2.
+*
+*  go_main->sub_numbers_v3(
+*    EXPORTING
+*      iv_num1 = p_num1
+*    CHANGING
+*      cv_num1 = gv_changing_num
+*  ).
+*
+*
+*  WRITE: /'Fark V3 = ', gv_changing_num.
+*
+*  go_main->sum_numbers_v3(
+*    EXPORTING
+*      iv_num1 = p_num1
+*      iv_num2 = p_num2
+*    RECEIVING
+*      rv_sum  = gv_sum
+*  ).
+*
+*   WRITE: /'Toplam  V3 = ', gv_sum.
+
+
+
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* CONSTRUCTOR
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+
+*
+*CLASS lcl_main DEFINITION DEFERRED.
+*DATA: go_main TYPE REF TO lcl_main.
+*
+*PARAMETERS: p_num1 TYPE int4,
+*            p_num2 TYPE int4.
+*
+*CLASS lcl_main DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      constructor,
+*      sum_numbers.
+*
+*    DATA: mv_num1 TYPE i,
+*          mv_num2 TYPE i,
+*          mv_sum TYPE i.
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_main IMPLEMENTATION.
+*  METHOD constructor.
+*    mv_num1 = p_num1.
+*   mv_num2 = p_num2.
+*  ENDMETHOD.
+*
+*
+*  METHOD sum_numbers.
+*    mv_sum = mv_num1 + mv_num2.
+*  ENDMETHOD.
+*
+*ENDCLASS.
+*
+*
+*START-OF-SELECTION.
+*
+*  CREATE OBJECT go_main.
+*
+*go_main->sum_numbers( ).
+*
+*WRITE: / ' Toplam', go_main->mv_sum.
+
+
+
+
+
+
+
+
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* Instance & Static
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+
+*
+*
+*CLASS lcl_main DEFINITION DEFERRED.
+*DATA: go_main1 TYPE REF TO lcl_main.
+*DATA: go_main2 TYPE REF TO lcl_main.
+*DATA: go_main3 TYPE REF TO lcl_main.
+*
+*CLASS lcl_main DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      do_process IMPORTING iv_pers_id   TYPE char10
+*                           iv_pers_name TYPE char10
+*                           iv_pers_age  TYPE numc2.
+*    CLASS-METHODS:
+*      class_constructor.
+*
+****      INSTENCE
+*    DATA: mv_pers_id   TYPE char10,
+*          mv_pers_name TYPE char10.
+****      STATIC
+*    CLASS-DATA: mv_pers_age TYPE numc2,
+*                mv_ttl_num  TYPE i.
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_main IMPLEMENTATION.
+*
+*    METHOD class_constructor.
+*    mv_ttl_num = mv_ttl_num + 1.
+*    ENDMETHOD.
+*
+*
+*    METHOD do_process.
+*
+*      mv_pers_id    =  iv_pers_id.
+*      mv_pers_name  =  iv_pers_name.
+*      mv_pers_age   =  iv_pers_age.
+*
+*    ENDMETHOD.
+*
+*ENDCLASS.
+*
+*
+*START-OF-SELECTION.
+*
+*  CREATE OBJECT: go_main1,
+*                 go_main2,
+*                 go_main3.
+*
+*  go_main1->do_process(
+*    EXPORTING
+*      iv_pers_id   = '1000000001'
+*      iv_pers_name = 'Selim'
+*      iv_pers_age  = '25'
+*  ).
+*
+*  go_main2->do_process(
+*  EXPORTING
+*    iv_pers_id   = '1000000002'
+*    iv_pers_name = 'Sena'
+*    iv_pers_age  = '24'
+*).
+*
+*
+*  go_main3->do_process(
+*  EXPORTING
+*    iv_pers_id   = '1000000003'
+*    iv_pers_name = 'Selin'
+*    iv_pers_age  = '30'
+*).
+*
+*  WRITE: / go_main1->mv_pers_id, go_main1->mv_pers_name, go_main1->mv_pers_age.
+*  WRITE: / go_main2->mv_pers_id, go_main2->mv_pers_name, go_main2->mv_pers_age.
+*  WRITE: / go_main3->mv_pers_id, go_main3->mv_pers_name, go_main3->mv_pers_age.
+*
+*
+*  WRITE: / go_main1->mv_ttl_num.
+
+
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* Inheritance
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+
+*
+*CLASS lcl_animal DEFINITION DEFERRED.
+*CLASS lcl_cat DEFINITION DEFERRED.
+*
+*DATA: go_cat TYPE REF TO lcl_cat.
+*
+*
+*
+*
+*CLASS lcl_animal DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      get_num_of_legs RETURNING VALUE(rv_legs) TYPE i,
+*      get_num_of_arms RETURNING VALUE(rv_arms) TYPE i.
+*
+*    DATA: mv_legs TYPE i,
+*          mv_arms TYPE i.
+*
+*ENDCLASS.
+*
+*CLASS lcl_animal IMPLEMENTATION.
+*
+*  METHOD get_num_of_legs.
+*    rv_legs = mv_legs.
+*  ENDMETHOD.
+*
+*  METHOD get_num_of_arms.
+*    rv_arms = mv_arms.
+*  ENDMETHOD.
+*
+*
+*ENDCLASS.
+*
+*CLASS lcl_cat DEFINITION INHERITING FROM lcl_animal.
+*  PUBLIC SECTION.
+*    METHODS:
+*      set_arms_and_legs IMPORTING iv_arms TYPE i
+*                                  iv_legs TYPE i.
+*
+*ENDCLASS.
+*
+*CLASS  lcl_cat IMPLEMENTATION.
+*  METHOD set_arms_and_legs.
+*    mv_legs = iv_legs.
+*    mv_arms = iv_arms.
+*  ENDMETHOD.
+*
+*
+*ENDCLASS.
+*
+*
+*START-OF-SELECTION.
+*
+*  CREATE OBJECT go_cat.
+*
+*  go_cat->set_arms_and_legs(
+*    EXPORTING
+*      iv_arms = 0
+*      iv_legs = 4
+*  ).
+*
+*  WRITE: 'Cat arms: ', go_cat->get_num_of_arms( ), 'and Cat legs: ', go_cat->get_num_of_legs( ).
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* Encapsulation
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+*CLASS: lcl_cat DEFINITION DEFERRED.
+*CLASS: lcl_animal DEFINITION DEFERRED.
+*
+*
+*DATA: go_cat    TYPE REF TO lcl_cat,
+*      go_animal TYPE REF TO lcl_animal.
+*
+*CLASS lcl_animal DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      get_number_of_legs RETURNING VALUE(rv_legs) TYPE i.
+*     DATA: mv_legs TYPE i.
+*
+*  PROTECTED SECTION.
+*    METHODS:
+*      get_number_of_arms RETURNING VALUE(rv_arms) TYPE i.
+*    DATA: mv_arms TYPE i.
+*
+*  PRIVATE SECTION.
+*    METHODS:
+*      get_number_of_eyes RETURNING VALUE(rv_eyes) TYPE i.
+*    DATA: mv_eyes TYPE i.
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_animal IMPLEMENTATION.
+*
+*  METHOD get_number_of_legs.
+*
+*    rv_legs = mv_legs.
+*
+*  ENDMETHOD.
+*
+*
+*  METHOD get_number_of_arms.
+*
+*    rv_arms = mv_arms.
+*
+*  ENDMETHOD.
+*
+*
+*  METHOD get_number_of_eyes.
+*
+*    rv_eyes = mv_eyes.
+*
+*  ENDMETHOD.
+*
+*
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_cat DEFINITION INHERITING FROM lcl_animal.
+*  PUBLIC SECTION.
+*    METHODS:
+*      constructor.
+*
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_cat IMPLEMENTATION.
+*  METHOD constructor.
+*
+*    super->constructor( ).
+*
+*    mv_legs = 4.
+**   mv_arms = 0.
+**   mv_eyes = 2.
+*  ENDMETHOD.
+*
+*ENDCLASS.
+*
+*
+*START-OF-SELECTION.
+*
+*  CREATE OBJECT: go_cat,
+*      go_animal.
+*
+*
+*  WRITE: go_animal->get_number_of_legs( ).
+**  WRITE: go_animal->get_number_of_arms( ).
+**  WRITE: go_animal->get_number_of_eyes( ).
+*  WRITE: go_animal->mv_legs.
+**  WRITE: go_animal->mv_arms.
+**  WRITE: go_animal->mv_eyes.
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* Interface
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+
+*
+*CLASS: lcl_cat DEFINITION DEFERRED.
+*DATA: go_cat TYPE REF TO lcl_cat.
+*
+*INTERFACE lif_animal.
+*  METHODS:
+*    get_number_of_legs RETURNING VALUE(rv_legs) TYPE i,
+*    get_number_of_arms RETURNING VALUE(rv_arms) TYPE i.
+*  DATA: mv_arms TYPE i,
+*        mv_legs TYPE i.
+*ENDINTERFACE.
+*
+*CLASS lcl_cat DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      constructor.
+*    INTERFACES lif_animal.
+*ENDCLASS.
+*
+*CLASS lcl_cat IMPLEMENTATION.
+*  METHOD constructor.
+*    lif_animal~mv_legs = 4.
+*    lif_animal~mv_arms = 0.
+*  ENDMETHOD.
+*
+*  METHOD lif_animal~get_number_of_legs.
+*    rv_legs = lif_animal~mv_legs.
+*  ENDMETHOD.
+*
+*  METHOD lif_animal~get_number_of_arms.
+*    rv_arms = lif_animal~mv_arms.
+*  ENDMETHOD.
+*
+*ENDCLASS.
+*
+*START-OF-SELECTION.
+*  CREATE OBJECT: go_cat.
+*  WRITE: 'Arms: ', go_cat->lif_animal~get_number_of_arms( ),'Legs: ',
+*  go_cat->lif_animal~get_number_of_legs( ).
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* Abstract
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+*
+*
+*
+*CLASS: lcl_cat DEFINITION DEFERRED.
+*
+*
+*DATA: go_cat  TYPE REF TO lcl_cat.
+*
+*
+*CLASS lcl_animal DEFINITION ABSTRACT.
+*  PUBLIC SECTION.
+*    METHODS:
+*      get_number_of_legs ABSTRACT RETURNING VALUE(rv_legs) TYPE i,
+*      get_number_of_arms RETURNING VALUE(rv_arms) TYPE i.
+*    DATA: mv_arms TYPE i,
+*          mv_legs TYPE i.
+*ENDCLASS.
+*
+*CLASS lcl_animal IMPLEMENTATION.
+*  METHOD get_number_of_arms.
+*    rv_arms = mv_arms.
+*  ENDMETHOD.
+*
+*ENDCLASS.
+*
+*CLASS lcl_cat DEFINITION INHERITING FROM lcl_animal.
+*  PUBLIC SECTION.
+*    METHODS:
+*      constructor,
+*      get_number_of_legs REDEFINITION.
+*ENDCLASS.
+*
+*CLASS lcl_cat IMPLEMENTATION.
+*  METHOD constructor.
+*    super->constructor( ).
+*    mv_legs = 2.
+*    mv_arms = 3.
+*  ENDMETHOD.
+*
+*  METHOD get_number_of_legs.
+*    rv_legs = mv_legs.
+*  ENDMETHOD.
+*ENDCLASS.
+*
+*START-OF-SELECTION.
+*  CREATE OBJECT: go_cat.
+*
+*
+*  WRITE: / 'Cats arms', go_cat->get_number_of_arms( ), 'Cats legs', go_cat->get_number_of_legs( ).
+
+
+
+
+*
+****************************************************************************************************************************
+**
+*
+*
+*
+* Polymorphism
+*
+*
+*
+* *
+****************************************************************************************************************************
+*
+*
+*
+
+*CLASS: lcl_dog   DEFINITION DEFERRED,
+*       lcl_cat   DEFINITION DEFERRED,
+*       lcl_main  DEFINITION DEFERRED.
+*
+*DATA: go_dog  TYPE REF TO lcl_dog,
+*      go_cat  TYPE REF TO lcl_cat,
+*      go_main TYPE REF TO lcl_main.
+*
+*
+*CLASS lcl_animal DEFINITION ABSTRACT.
+*  PUBLIC SECTION.
+*    METHODS:
+*      get_type ABSTRACT,
+*      speak ABSTRACT.
+*ENDCLASS.
+*
+*
+*CLASS lcl_dog DEFINITION INHERITING FROM lcl_animal.
+*  PUBLIC SECTION.
+*    METHODS:
+*      get_type REDEFINITION,
+*      speak REDEFINITION.
+*ENDCLASS.
+*
+*
+*CLASS lcl_dog IMPLEMENTATION.
+*  METHOD get_type.
+*    WRITE: 'Dog'.
+*
+*  ENDMETHOD.
+*
+*  METHOD speak.
+*    WRITE: 'Bark'.
+*  ENDMETHOD.
+*ENDCLASS.
+*
+*
+*
+*
+*CLASS lcl_cat DEFINITION INHERITING FROM lcl_animal.
+*  PUBLIC SECTION.
+*    METHODS:
+*      get_type REDEFINITION,
+*      speak REDEFINITION.
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_cat IMPLEMENTATION.
+*  METHOD get_type.
+*    WRITE: 'Cat'.
+*
+*  ENDMETHOD.
+*
+*  METHOD speak.
+*    WRITE: 'Meow'.
+*  ENDMETHOD.
+*
+*ENDCLASS.
+*
+*CLASS lcl_main DEFINITION.
+*  PUBLIC SECTION.
+*    METHODS:
+*      play IMPORTING io_animal TYPE REF TO lcl_animal.
+*
+*
+*
+*ENDCLASS.
+*
+*
+*CLASS lcl_main IMPLEMENTATION.
+*  METHOD play.
+*    WRITE: 'The'.
+*    io_animal->get_type( ).
+*    WRITE: 'Says'.
+*    io_animal->speak( ).
+*    NEW-LINE.
+*  ENDMETHOD.
+*ENDCLASS.
+*
+*
+*START-OF-SELECTION.
+*
+*  CREATE OBJECT: go_dog,
+*                 go_cat,
+*                 go_main.
+*
+*  go_main->play( io_animal = go_dog  ).
+*  go_main->play( io_animal = go_cat  ).
